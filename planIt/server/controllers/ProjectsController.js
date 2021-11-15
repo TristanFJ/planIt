@@ -7,7 +7,6 @@ export class ProjectsController extends BaseController {
   constructor() {
     super('api/projects')
     this.router
-      // TODO AUTHORIZATION
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id', this.getById)
@@ -15,6 +14,7 @@ export class ProjectsController extends BaseController {
       .delete('/:id', this.remove)
   }
 
+  // TODO edit project?
   async getAll(req, res, next) {
     try {
       const query = req.query
