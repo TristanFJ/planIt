@@ -7,5 +7,19 @@ class ProjectsService {
     logger.log(res)
     return res
   }
+
+  async getById(id) {
+    const found = await dbContext.Projects.findById(id).populate('creator', 'name picture')
+    if (!found) {
+      throw new BadRequest('invalid id good sir')
+    }
+    return found
+  }
+
+  async create(body) {
+    const newProject = await dbContext.Projects.create(body)
+    logger.log('projectService ', newProject)
+    return await this.getById(newProject.id)
+  }
 }
 export const projectsService = new ProjectsService()
