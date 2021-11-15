@@ -12,6 +12,7 @@ export class ProjectsController extends BaseController {
       .get('', this.getAll)
       .get('/:id', this.getById)
       .post('', this.create)
+      .delete('/:id', this.remove)
   }
 
   async getAll(req, res, next) {
@@ -40,6 +41,17 @@ export class ProjectsController extends BaseController {
       const newProject = await projectsService.create(req.body)
       logger.log('projectController ', newProject)
       return res.send(newProject)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async remove(req, res, next) {
+    try {
+      const userId = req.userInfo.id
+      const projectId = req.params.id
+      await projectsService.remove(projectId, userId)
+      return res.send('delete successful')
     } catch (e) {
       next(e)
     }

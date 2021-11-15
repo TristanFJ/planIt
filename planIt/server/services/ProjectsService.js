@@ -21,5 +21,13 @@ class ProjectsService {
     logger.log('projectService ', newProject)
     return await this.getById(newProject.id)
   }
+
+  async remove(projectId, userId) {
+    const project = await this.getById(projectId)
+    if (project.creatorId.toString() !== userId) {
+      throw new Forbidden('ACCESS DENIED')
+    }
+    await dbContext.Projects.findByIdAndDelete(projectId)
+  }
 }
 export const projectsService = new ProjectsService()
