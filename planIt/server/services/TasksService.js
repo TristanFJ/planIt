@@ -27,6 +27,16 @@ class TasksService {
     return await this.getById(newTask.id)
   }
 
+  async edit(body) {
+    const task = await this.getById(body.id)
+    if (task.creatorId.toString() !== body.creatorId) {
+      throw new Forbidden('ACCESS DENIED')
+    }
+    // REVIEW
+    const updatedTask = dbContext.Tasks.findByIdAndUpdate({ _id: body.id, creatorId: body.creatorId }, body, { new: true })
+    return updatedTask
+  }
+
   async remove(taskId, userId) {
     const task = await this.getById(taskId)
     if (task.creatorId.toString() !== userId) {

@@ -11,6 +11,7 @@ export class TasksController extends BaseController {
       .get('/:projectId/tasks', this.getAll)
       .get('/:projectId/tasks/:id', this.getById)
       .post('/:projectId/tasks', this.create)
+      .put('/:projectId/tasks/:id', this.edit)
       .delete('/:projectId/tasks/:id', this.remove)
   }
 
@@ -41,6 +42,17 @@ export class TasksController extends BaseController {
       return res.send(task)
     } catch (e) {
       next(e)
+    }
+  }
+
+  async edit(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      req.body.id = req.params.id
+      const task = await tasksService.edit(req.body)
+      return res.send(task)
+    } catch (error) {
+      next(error)
     }
   }
 
