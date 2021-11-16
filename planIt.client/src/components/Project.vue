@@ -7,6 +7,8 @@
     <small>Creator: {{ active.creator.name }}</small>
   </div>
   <button class="mdi mdi-delete" @click="remove(active.id)"></button>
+
+  <Sprint />
 </template>
 
 
@@ -17,8 +19,16 @@ import { projectService } from "../services/ProjectService"
 import Pop from "../utils/Pop"
 import { logger } from "../utils/Logger"
 import { router } from "../router"
+import { onMounted } from "@vue/runtime-core"
 export default {
   setup() {
+    onMounted(async () => {
+      try {
+        await projectService.getAll('api/projects')
+      } catch (error) {
+        logger.error(error)
+      }
+    })
     return {
       active: computed(() => AppState.activeProject),
 
