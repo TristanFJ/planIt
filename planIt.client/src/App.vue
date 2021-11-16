@@ -7,7 +7,8 @@
   </main>
   <footer>
     <div class="bg-dark text-light text-center p-4">
-      Made with 💖 by CodeWorks
+      <!-- TODO githubs -->
+      Made with 💖 by Team Best
     </div>
   </footer>
 </template>
@@ -20,11 +21,12 @@ export default {
   setup() {
     return {
       appState: computed(() => AppState)
+
+
     }
   }
 }
 </script>
 <style lang="scss">
 @import "./assets/scss/main.scss";
-
 </style>
