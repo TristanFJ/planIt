@@ -1,5 +1,6 @@
 import { AppState } from "../AppState"
 import { logger } from "../utils/Logger"
+import Pop from "../utils/Pop"
 import { api } from "./AxiosService"
 
 class ProjectService {
@@ -14,8 +15,15 @@ class ProjectService {
       throw new Error('no id')
     }
     AppState.activeProject = found
-
   }
+
+  async createProject(data) {
+    Pop.toast('created', 'success')
+    const res = await api.post('api/projects', data)
+    logger.log(res)
+    AppState.projects.unshift(res.data)
+  }
+
 }
 
 export const projectService = new ProjectService()

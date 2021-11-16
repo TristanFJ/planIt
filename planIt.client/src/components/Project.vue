@@ -1,6 +1,10 @@
 <template>
   <div class="component p-3">
-    {{ active.name }}
+    <h1>{{ active.name }}</h1>
+    <p>
+      {{ active.description }}
+    </p>
+    <small>Creator: {{ active.creator.name }}</small>
   </div>
 </template>
 

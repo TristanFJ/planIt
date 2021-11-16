@@ -1,5 +1,6 @@
 <template>
-  <Project />
+  <h1>Projects</h1>
+  <CreateProject />
 </template>
 
 <script>
@@ -18,7 +19,8 @@ export default {
         logger.error(error);
         Pop.toast(error.message, 'error')
       }
-    })
+    });
+
   }
 }
 </script>
