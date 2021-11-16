@@ -1,6 +1,6 @@
 import { dbContext } from '../db/DbContext'
 import { BadRequest, Forbidden } from '../utils/Errors'
-import { logger } from '../utils/Logger'
+// import { logger } from '../utils/Logger'
 
 class TasksService {
   async getAll(query = {}) {
