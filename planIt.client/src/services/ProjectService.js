@@ -11,9 +11,10 @@ class ProjectService {
 
   async setActive(id) {
     const found = AppState.projects.find(s => s.id === id)
-    if (!found) {
-      throw new Error('no id')
-    }
+    //FIXME Why is this throwing an error on home page??
+    // if (!found) {
+    //   throw new Error('no id')
+    // }
     AppState.activeProject = found
   }
 
@@ -21,7 +22,17 @@ class ProjectService {
     Pop.toast('created', 'success')
     const res = await api.post('api/projects', data)
     logger.log(res)
-    AppState.projects.unshift(res.data)
+    AppState.projects.push(res.data)
+    AppState.activeProject = res.data
+  }
+
+  async remove(id) {
+    logger.log(id)
+    const yes = await Pop.confirm('Delete?')
+    if (!yes) { return }
+    const res = await api.delete('api/projects/' + id)
+    AppState.projects = AppState.projects.filter(p => p.id !== id)
+    AppState.activeProject = null
   }
 
 }

@@ -51,6 +51,8 @@
                   type="submit"
                   @click.prevent="createProject"
                   class="btn btn-primary"
+                  data-bs-target="#create"
+                  data-bs-dismiss="modal"
                 >
                   Save changes
                 </button>
@@ -71,8 +73,12 @@ import { reactive } from "@vue/reactivity";
 import { projectService } from "../services/ProjectService";
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
+import { useRouter } from "vue-router";
+import { AppState } from "../AppState";
 export default {
   setup() {
+    const router = useRouter()
+    // TODO set as activeProject and pass id into router push
     const state = reactive({
       editable: {},
     });
@@ -83,11 +89,16 @@ export default {
           // logger.log(state.editable)
           await projectService.createProject(state.editable)
           state.editable = {}
+          router.push({
+            name: "Project",
+            params: { projectId: AppState.activeProject.id }
+          })
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, "error")
         }
-      }
+      },
+
     }
   }
 }
