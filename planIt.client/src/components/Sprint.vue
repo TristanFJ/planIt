@@ -1,17 +1,35 @@
 <template>
-  <div class="sprint">
-    <h1>Sprints</h1>
-    <ul>
-      <li v-for="s in sprints" :key="s.id">
-        <div>
-          {{ s.name }}
+  <div class="sprint p-3">
+    <h4>Sprints</h4>
+    <h6>
+      Group your tasks into sprints for over-arching collections for better
+      organization
+    </h6>
+    <div class="mt-5">
+      <div class="card m-2 w-50 p-3" v-for="s in sprints" :key="s.id">
+        <div class="d-flex justify-content-between">
           <i
             @click="remove(s.id)"
-            class="selectable mdi mdi-trash-can-outline"
+            class="
+              selectable
+              bg-danger
+              mdi mdi-trash-can-outline
+              rounded
+              align-self-center
+            "
           ></i>
+          <h4>{{ s.name }}</h4>
+          <i class="mdi mdi-dumbbell mx-2">weight</i>
         </div>
-      </li>
-    </ul>
+        <ul>
+          <li>tasks</li>
+          <li>task2</li>
+        </ul>
+        <p class="selectable mdi mdi-plus p-1 m-1 rounded bg-success">
+          Add task
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
