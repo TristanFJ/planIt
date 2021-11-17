@@ -5,6 +5,10 @@
       <li v-for="s in sprints" :key="s.id">
         <div>
           {{ s.name }}
+          <i
+            @click="remove(s.id)"
+            class="selectable mdi mdi-trash-can-outline"
+          ></i>
         </div>
       </li>
     </ul>
@@ -35,6 +39,15 @@ export default {
       sprints: computed(() => AppState.sprints),
       active: computed(() => AppState.activeProject),
 
+      async remove(sprintId) {
+
+        try {
+          await sprintService.remove(sprintId, route.params.projectId)
+        } catch (error) {
+          logger.error(error)
+        }
+
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark lighten-10 px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <i class="mdi mdi-notebook-outline f-30"></i>
+      <img src="../assets/img/rocket.png" height="65" alt="Logo" />
     </router-link>
     <button
       class="navbar-toggler"
