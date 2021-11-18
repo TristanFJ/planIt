@@ -1,17 +1,20 @@
 <template>
   <div class="component p-3" v-if="active">
+    <button
+      class="mdi mdi-delete bg-danger btn"
+      @click="remove(active.id)"
+    ></button>
+    <button
+      class="btn btn-rounded btn-dark mdi mdi-plus ms-3"
+      data-bs-toggle="modal"
+      data-bs-target="#createSprint"
+    ></button>
     <h1>{{ active.name }}</h1>
     <p>
       {{ active.description }}
     </p>
     <small>Creator: {{ active.creator.name }}</small>
   </div>
-  <button class="mdi mdi-delete" @click="remove(active.id)"></button>
-  <button
-    class="btn btn-rounded btn-dark mdi mdi-plus"
-    data-bs-toggle="modal"
-    data-bs-target="#createSprint"
-  ></button>
   <h4>Sprints</h4>
   <h6>
     Group your tasks into sprints for over-arching collections for better
