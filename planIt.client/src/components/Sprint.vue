@@ -13,7 +13,7 @@
               align-self-center
             "
           ></i>
-          <h4>{{ sprint.name }}</h4>
+          <h4>{{ sprint.name }} {{ weight }}</h4>
           <i class="mdi mdi-dumbbell mx-2"></i>
         </div>
         <ul>
@@ -65,7 +65,7 @@
 
 
 <script>
-import { computed, onMounted, reactive, ref } from "@vue/runtime-core"
+import { computed, onMounted, reactive, ref, watchEffect } from "@vue/runtime-core"
 import { AppState } from "../AppState"
 import { logger } from "../utils/Logger"
 import { sprintService } from "../services/SprintService"
@@ -80,9 +80,16 @@ export default {
     const route = useRoute()
     let editable = ref({
     });
-    onMounted(async () => {
+
+    // REVIEW watcheffect???
+    watchEffect(async () => {
       try {
         await taskService.getAll('api/projects/' + route.params.projectId + '/tasks')
+        // AppState.tasks.forEach(t => {
+        //   if (t.sprintId == props.sprint.id) {
+        //     weight.value += t.weight
+        //   }
+        // })
       } catch (error) {
         logger.error(error);
         Pop.toast(error.message, 'error')
@@ -93,6 +100,17 @@ export default {
       editable,
       active: computed(() => AppState.activeProject),
       tasks: computed(() => AppState.tasks.filter(t => t.sprintId == props.sprint.id)),
+      weight: computed(() => {
+        let weight = 0
+        AppState.tasks.forEach(t => {
+          if (t.sprintId == props.sprint.id) {
+            weight += t.weight
+          }
+        })
+        logger.log(weight)
+        return weight
+      }),
+
 
       async remove() {
         try {
@@ -110,20 +128,14 @@ export default {
           await taskService.createTask(route.params.projectId, editable.value)
           logger.log('createTask', route.params.projectId, editable.value)
           Pop.toast('created', 'success')
-          editable = {}
+          editable.value = {}
         } catch (error) {
           logger.error(error)
         }
       },
-      // MAYBE put edit into here?
-      // async edit() {
-      //   try {
-      //     const taskId = props.task.id
-      //     await taskService.edit(taskId, route.params.projectId, editable.value)
-      //   } catch (error) {
-      //     logger.error(error)
-      //   }
-      // }
+
+
+
     }
   }
 }

@@ -3,7 +3,7 @@
     <i
       class="selectable bg-warning mdi mdi-pencil rounded align-self-center"
       data-bs-toggle="modal"
-      data-bs-target="#edit"
+      :data-bs-target="'#edit-' + task.id"
       title="Edit"
     ></i>
     {{ task.name }}, Weight: {{ task.weight }}
@@ -12,8 +12,8 @@
       class="selectable mdi mdi-trash-can-outline bg-danger"
     ></i>
   </div>
-
-  <div id="edit" class="modal" tabindex="-1">
+  <!-- EDIT -->
+  <div :id="'edit-' + task.id" class="modal" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -105,6 +105,7 @@ export default {
       async edit() {
         try {
           const taskId = props.task.id
+          logger.log('taskId', props.task.id)
           await taskService.edit(taskId, route.params.projectId, editable.value)
         } catch (error) {
           logger.error(error)
