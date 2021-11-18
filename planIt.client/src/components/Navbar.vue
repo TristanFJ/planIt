@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-light lighten-10 px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark lighten-10 px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <img src="../assets/img/rocket.png" height="65" alt="Logo" />
       <h1 class="grad px-2 mb-0 mt-2 align-self-center">PlanIt</h1>

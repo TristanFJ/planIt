@@ -67,12 +67,12 @@
     background: linear-gradient(90deg, rgba(145, 8, 243, 1) 4%, rgba(243, 140, 12, 1) 98%);
   }
 
-  .grad {
+  /* .grad {
     width: 100%;
     height: 4px;
     background: rgb(145, 8, 243);
     background: linear-gradient(90deg, rgba(145, 8, 243, 1) 4%, rgba(243, 140, 12, 1) 98%);
-  }
+  } */
 
   .btngrad2 {
     font-style: italic;
