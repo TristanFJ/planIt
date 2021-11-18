@@ -73,6 +73,7 @@ import { sprintService } from "../services/SprintService"
 import Pop from "../utils/Pop"
 import { useRoute } from "vue-router"
 import { taskService } from "../services/TaskService"
+import { noteService } from "../services/NoteService"
 export default {
   props: { sprint: { type: Object, required: true } },
   setup(props) {
@@ -85,6 +86,7 @@ export default {
     onMounted(async () => {
       try {
         await taskService.getAll('api/projects/' + route.params.projectId + '/tasks')
+        await noteService.getAll('api/projects/' + route.params.projectId + '/notes')
         // AppState.tasks.forEach(t => {
         //   if (t.sprintId == props.sprint.id) {
         //     weight.value += t.weight
