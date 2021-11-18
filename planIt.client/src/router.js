@@ -12,13 +12,13 @@ const routes = [
     component: loadPage('HomePage'),
     beforeEnter: authSettled
   },
-  {
-    path: '/about',
-    name: 'About',
-    component: loadPage('AboutPage'),
-    beforeEnter: authSettled
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   component: loadPage('AboutPage'),
+  //   beforeEnter: authSettled
 
-  },
+  // },
   {
     path: '/project/:projectId',
     name: 'Project',

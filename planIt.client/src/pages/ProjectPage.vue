@@ -1,4 +1,14 @@
 <template>
+  <div class="grad"></div>
+  <button
+    class="btn btngrad2 text-light selectable mt-3"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasExample"
+    aria-controls="offcanvasExample"
+  >
+    Projects
+  </button>
   <div class="component p-3" v-if="active">
     <button
       class="mdi mdi-delete bg-danger btn"
@@ -50,7 +60,6 @@ export default {
       active: computed(() => AppState.projects.find(p => p.id == route.params.projectId)),
       sprints: computed(() => AppState.sprints),
 
-
       async remove(id) {
         try {
           logger.log('removed')
@@ -71,4 +80,38 @@ export default {
 
 
 <style lang="scss" scoped>
+.btnGrad {
+  background: rgb(145, 8, 243);
+  background: linear-gradient(
+    90deg,
+    rgba(145, 8, 243, 1) 4%,
+    rgba(243, 140, 12, 1) 98%
+  );
+}
+
+.grad {
+  width: 100%;
+  height: 4px;
+  background: rgb(145, 8, 243);
+  background: linear-gradient(
+    90deg,
+    rgba(145, 8, 243, 1) 4%,
+    rgba(243, 140, 12, 1) 98%
+  );
+}
+
+.btngrad2 {
+  font-style: italic;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 37, 243, 1) 4%,
+    rgba(243, 140, 12, 1) 98%
+  );
+  /* background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent; */
+  font-family: "Bebas Neue", cursive;
+}
 </style>

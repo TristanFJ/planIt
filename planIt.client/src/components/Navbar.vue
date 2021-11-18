@@ -2,6 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark px-3 bg-flow">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <img src="../assets/img/rocket.png" height="65" alt="Logo" />
+      <h1 class="grad px-2 mb-0 mt-2 align-self-center">PlanIt</h1>
     </router-link>
     <button
       class="navbar-toggler"
@@ -23,32 +24,20 @@
     >
       Link with href
     </a> -->
-    <button
-      class="btn btn-primary"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasExample"
-      aria-controls="offcanvasExample"
-    >
+    <!-- <button class="btn btngrad selectable" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+      aria-controls="offcanvasExample">
       Projects
-    </button>
+    </button> -->
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <li>
-          <!-- <router-link
-            :to="{ name: 'About' }"
-            class="btn text-success lighten-30 selectable text-uppercase"
-          >
-            About
-          </router-link> -->
-        </li>
+        <li></li>
       </ul>
       <span class="navbar-text">
         <button
           class="
             btn
             selectable
-            text-success
+            text-dark
             lighten-30
             text-uppercase
             my-2 my-lg-0
@@ -72,7 +61,7 @@
               height="40"
               class="rounded"
             />
-            <span class="mx-3 text-success lighten-30">{{ user.name }}</span>
+            <span class="mx-3 text-dark lighten-30">{{ user.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
@@ -126,13 +115,13 @@ export default {
 
 <style scoped>
 .bg-flow {
-  background: rgb(131, 58, 180);
+  /* background: rgb(131, 58, 180);
   background: linear-gradient(
     359deg,
     rgba(131, 58, 180, 1) 0%,
     rgba(253, 29, 29, 1) 50%,
     rgba(252, 176, 69, 1) 100%
-  );
+  ); */
 }
 .dropdown-menu {
   user-select: none;
