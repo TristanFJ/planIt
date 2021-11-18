@@ -7,7 +7,7 @@ import { api } from "./AxiosService"
 class SprintService {
   async getAll(query = '') {
     const res = await api.get(query)
-    logger.log(res)
+    logger.log('sprints ', res)
     AppState.sprints = res.data
   }
   async createSprint(id, data) {

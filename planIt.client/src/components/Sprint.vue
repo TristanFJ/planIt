@@ -1,15 +1,10 @@
 <template>
   <div class="sprint p-3">
-    <h4>Sprints</h4>
-    <h6>
-      Group your tasks into sprints for over-arching collections for better
-      organization
-    </h6>
     <div class="mt-5">
-      <div class="card m-2 w-50 p-3" v-for="s in sprints" :key="s.id">
+      <div class="card m-2 w-50 p-3">
         <div class="d-flex justify-content-between">
           <i
-            @click="remove(s.id)"
+            @click="remove()"
             class="
               selectable
               bg-danger
@@ -18,16 +13,51 @@
               align-self-center
             "
           ></i>
-          <h4>{{ s.name }}</h4>
-          <i class="mdi mdi-dumbbell mx-2">weight</i>
+          <h4>{{ sprint.name }}</h4>
+          <i class="mdi mdi-dumbbell mx-2"></i>
         </div>
         <ul>
-          <li>tasks</li>
-          <li>task2</li>
+          <Task v-for="t in tasks" :key="t.id" :task="t" />
         </ul>
-        <p class="selectable mdi mdi-plus p-1 m-1 rounded bg-success">
-          Add task
-        </p>
+
+        <form @submit.prevent="createTask()">
+          <div class="row">
+            <div class="col-8">
+              <input
+                v-model="editable.name"
+                type="text"
+                class="form-control"
+                placeholder="Task Name"
+                aria-label="Example text with button addon"
+                aria-describedby="button-addon1"
+                required
+              />
+            </div>
+            <div class="col-4">
+              <input
+                v-model="editable.weight"
+                type="number"
+                min="1"
+                max="5"
+                pattern=".{1, 5}"
+                class="form-control"
+                placeholder="Weight"
+                aria-label="Example text with button addon"
+                aria-describedby="button-addon1"
+                required
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            @click.prevent="createTask()"
+            class="btn btn-primary"
+            data-bs-target="#createSprint"
+            data-bs-dismiss="modal"
+          >
+            Create
+          </button>
+        </form>
       </div>
     </div>
   </div>
@@ -35,37 +65,65 @@
 
 
 <script>
-import { computed, onMounted } from "@vue/runtime-core"
+import { computed, onMounted, reactive, ref } from "@vue/runtime-core"
 import { AppState } from "../AppState"
 import { logger } from "../utils/Logger"
 import { sprintService } from "../services/SprintService"
 
 import Pop from "../utils/Pop"
 import { useRoute } from "vue-router"
+import { taskService } from "../services/TaskService"
 export default {
-  setup() {
+  props: { sprint: { type: Object, required: true } },
+  setup(props) {
+
     const route = useRoute()
+    let editable = ref({
+    });
     onMounted(async () => {
       try {
-        await sprintService.getAll('api/projects/' + route.params.projectId + '/sprints')
+        await taskService.getAll('api/projects/' + route.params.projectId + '/tasks')
       } catch (error) {
         logger.error(error);
         Pop.toast(error.message, 'error')
       }
     })
+
     return {
-      sprints: computed(() => AppState.sprints),
+      editable,
       active: computed(() => AppState.activeProject),
+      tasks: computed(() => AppState.tasks.filter(t => t.sprintId == props.sprint.id)),
 
-      async remove(sprintId) {
-
+      async remove() {
         try {
+          const sprintId = props.sprint.id
           await sprintService.remove(sprintId, route.params.projectId)
         } catch (error) {
           logger.error(error)
         }
 
-      }
+      },
+
+      async createTask() {
+        try {
+          editable.value.sprintId = props.sprint.id
+          await taskService.createTask(route.params.projectId, editable.value)
+          logger.log('createTask', route.params.projectId, editable.value)
+          Pop.toast('created', 'success')
+          editable = {}
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+      // MAYBE put edit into here?
+      // async edit() {
+      //   try {
+      //     const taskId = props.task.id
+      //     await taskService.edit(taskId, route.params.projectId, editable.value)
+      //   } catch (error) {
+      //     logger.error(error)
+      //   }
+      // }
     }
   }
 }

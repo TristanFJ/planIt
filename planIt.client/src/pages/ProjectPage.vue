@@ -12,7 +12,12 @@
     data-bs-toggle="modal"
     data-bs-target="#createSprint"
   ></button>
-  <Sprint />
+  <h4>Sprints</h4>
+  <h6>
+    Group your tasks into sprints for over-arching collections for better
+    organization
+  </h6>
+  <Sprint v-for="s in sprints" :key="s.id" :sprint="s" />
   <CreateSprint />
 </template>
 
@@ -26,12 +31,14 @@ import { logger } from "../utils/Logger"
 import { router } from "../router"
 import { onMounted } from "@vue/runtime-core"
 import { useRoute } from "vue-router"
+import { sprintService } from "../services/SprintService"
 export default {
   setup() {
     const route = useRoute()
     onMounted(async () => {
       try {
         await projectService.getAll('api/projects')
+        await sprintService.getAll('api/projects/' + route.params.projectId + '/sprints')
       } catch (error) {
         logger.error(error)
       }
@@ -39,6 +46,7 @@ export default {
     return {
       active: computed(() => AppState.projects.find(p => p.id == route.params.projectId)),
       sprints: computed(() => AppState.sprints),
+
 
       async remove(id) {
         try {
