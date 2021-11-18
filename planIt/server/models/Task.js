@@ -4,7 +4,7 @@ const ObjectId = mongoose.Types.ObjectId
 
 export const TaskSchema = new Schema({
   name: { type: String, required: true },
-  weight: { type: Number, required: true },
+  weight: { type: Number, required: true, min: 1, max: 10 },
   isComplete: { type: Boolean, default: false },
   projectId: { type: ObjectId, required: true, ref: 'Project' },
   sprintId: { type: ObjectId, required: true, ref: 'Sprint' },
