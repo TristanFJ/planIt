@@ -5,7 +5,7 @@
   <main>
     <router-view />
   </main>
-  <footer>
+  <footer class="bg-cDark">
     <div class="text-center p-4">
       <!-- TODO githubs -->
       Made with 💖 by Team Best
@@ -14,19 +14,19 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { AppState } from './AppState'
-export default {
-  name: 'App',
-  setup() {
-    return {
-      appState: computed(() => AppState)
+  import { computed } from 'vue'
+  import { AppState } from './AppState'
+  export default {
+    name: 'App',
+    setup() {
+      return {
+        appState: computed(() => AppState)
 
 
+      }
     }
   }
-}
 </script>
 <style lang="scss">
-@import "./assets/scss/main.scss";
+  @import "./assets/scss/main.scss";
 </style>
