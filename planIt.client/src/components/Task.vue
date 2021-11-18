@@ -7,6 +7,18 @@
       :data-bs-target="'#edit-' + task.id"
       title="Edit"
     ></i>
+    <i
+      class="
+        selectable
+        bg-primary
+        mdi mdi-message-bulleted
+        rounded
+        align-self-center
+      "
+      data-bs-toggle="modal"
+      :data-bs-target="'#note-' + task.id"
+      title="Note"
+    ></i>
     {{ task.name }}, Weight: {{ task.weight }}
     <i
       v-if="account.id == task.creatorId"
@@ -14,6 +26,7 @@
       class="selectable mdi mdi-trash-can-outline bg-danger"
     ></i>
   </div>
+  <Note v-for="n in notes" :key="n.id" :note="n" />
   <!-- EDIT -->
   <div :id="'edit-' + task.id" class="modal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -98,6 +111,38 @@
       </div>
     </div>
   </div>
+  <!-- Notes -->
+  <div :id="'note-' + task.id" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Note</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="createNote()">
+            <div class="row">
+              <textarea v-model="newNote.body"> </textarea>
+              <button
+                type="submit"
+                @click.prevent="createNote()"
+                class="btn btn-primary"
+                :data-bs-target="'#edit-' + task.id"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 
@@ -106,17 +151,21 @@ import { computed, reactive, ref, watchEffect } from "@vue/runtime-core"
 import Pop from "../utils/Pop";
 import { logger } from "../utils/Logger";
 import { taskService } from "../services/TaskService"
+import { noteService } from "../services/NoteService"
 import { useRoute } from "vue-router";
 import { AppState } from "../AppState";
 
 export default {
   props: {
     task: { type: Object, required: true },
+    // sprint: { type: Object, required: true },
+    // note: { type: Object, required: true }
   },
   setup(props) {
     const route = useRoute()
     const editable = ref({
     });
+    const newNote = ref({})
 
     watchEffect(() => {
       editable.value = { ...props.task };
@@ -124,9 +173,11 @@ export default {
 
     return {
       editable,
+      newNote,
       tasks: computed(() => AppState.tasks),
       sprints: computed(() => AppState.sprints),
-      sprintsFilter: computed(() => AppState.sprints.filter(s => route.params.projectId == s.projectId)),
+      // sprintsFilter: computed(() => AppState.sprints.filter(s => route.params.projectId == s.projectId)),
+      notes: computed(() => AppState.notes.filter(n => n.taskId == props.task.id)),
       account: computed(() => AppState.account),
 
 
@@ -144,6 +195,17 @@ export default {
         try {
           const taskId = props.task.id
           await taskService.edit(taskId, route.params.projectId, editable.value)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+      // FILTER based on the taskId 
+      async createNote() {
+        try {
+          newNote.value.taskId = props.task.id
+          // newNote.value.sprintId = props.sprint.id
+          await noteService.createNote(route.params.projectId, newNote.value)
+          logger.log('create note', newNote.value)
         } catch (error) {
           logger.error(error)
         }
