@@ -68,7 +68,7 @@
                   class="form-select mt-2"
                   aria-label="select"
                 >
-                  <option selected>Choose Sprint...</option>
+                  <!-- <option selected>Choose Sprint...</option> -->
                   <option
                     v-for="s in sprints"
                     :key="s.id"
@@ -99,7 +99,7 @@
 
 
 <script>
-import { computed, reactive, ref } from "@vue/runtime-core"
+import { computed, reactive, ref, watchEffect } from "@vue/runtime-core"
 import Pop from "../utils/Pop";
 import { logger } from "../utils/Logger";
 import { taskService } from "../services/TaskService"
@@ -112,7 +112,11 @@ export default {
   },
   setup(props) {
     const route = useRoute()
-    let editable = ref({
+    const editable = ref({
+    });
+
+    watchEffect(() => {
+      editable.value = { ...props.task };
     });
 
     return {
@@ -133,7 +137,6 @@ export default {
       },
       async edit() {
         try {
-          logger.log('taskId', editable.value)
           const taskId = props.task.id
           await taskService.edit(taskId, route.params.projectId, editable.value)
         } catch (error) {

@@ -106,7 +106,6 @@ export default {
             weight += t.weight
           }
         })
-        logger.log(weight)
         return weight
       }),
 
@@ -125,7 +124,7 @@ export default {
         try {
           editable.value.sprintId = props.sprint.id
           await taskService.createTask(route.params.projectId, editable.value)
-          logger.log('createTask', route.params.projectId, editable.value)
+          // logger.log('createTask', route.params.projectId, editable.value)
           Pop.toast('created', 'success')
           editable.value = {}
         } catch (error) {
