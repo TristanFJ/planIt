@@ -82,7 +82,7 @@ export default {
     });
 
     // REVIEW watcheffect???
-    watchEffect(async () => {
+    onMounted(async () => {
       try {
         await taskService.getAll('api/projects/' + route.params.projectId + '/tasks')
         // AppState.tasks.forEach(t => {
@@ -95,7 +95,6 @@ export default {
         Pop.toast(error.message, 'error')
       }
     })
-
     return {
       editable,
       active: computed(() => AppState.activeProject),

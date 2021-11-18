@@ -52,13 +52,40 @@
                   aria-describedby="button-addon1"
                   required
                 />
+                <!-- </div> -->
+                <!-- <div class="dropdown">
+                <button
+                  class="btn btn-primary my-2 dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Move task
+                </button> -->
+                <select
+                  v-model="editable.sprintId"
+                  class="form-select mt-2"
+                  aria-label="select"
+                >
+                  <option selected>Choose Sprint...</option>
+                  <option
+                    v-for="s in sprints"
+                    :key="s.id"
+                    :sprint="s"
+                    class="dropdown-item selectable"
+                    v-bind:value="s.id"
+                  >
+                    {{ s.name }}
+                  </option>
+                </select>
               </div>
             </div>
             <button
               type="submit"
-              @click.prevent="edit"
+              @click.prevent="edit()"
               class="btn btn-primary"
-              data-bs-target="#createSprint"
+              :data-bs-target="'#edit-' + task.id"
               data-bs-dismiss="modal"
             >
               Submit
@@ -81,7 +108,7 @@ import { AppState } from "../AppState";
 
 export default {
   props: {
-    task: { type: Object, required: true }
+    task: { type: Object, required: true },
   },
   setup(props) {
     const route = useRoute()
@@ -91,6 +118,9 @@ export default {
     return {
       editable,
       tasks: computed(() => AppState.tasks),
+      sprints: computed(() => AppState.sprints),
+      sprintsFilter: computed(() => AppState.sprints.filter(s => route.params.projectId == s.projectId)),
+
 
       async remove() {
         try {
@@ -101,11 +131,10 @@ export default {
 
         }
       },
-      // BUG only edits the first task
       async edit() {
         try {
+          logger.log('taskId', editable.value)
           const taskId = props.task.id
-          logger.log('taskId', props.task.id)
           await taskService.edit(taskId, route.params.projectId, editable.value)
         } catch (error) {
           logger.error(error)
