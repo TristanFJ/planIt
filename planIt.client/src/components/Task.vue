@@ -1,12 +1,12 @@
 <template>
-  <div class="task my-3 d-flex justify-content-evenly border border-dark">
-    {{ task.name }}, Weight: {{ task.weight }}
+  <div class="task my-3 d-flex justify-content-between border border-dark">
     <i
       class="selectable bg-warning mdi mdi-pencil rounded align-self-center"
       data-bs-toggle="modal"
       data-bs-target="#edit"
       title="Edit"
     ></i>
+    {{ task.name }}, Weight: {{ task.weight }}
     <i
       @click="remove()"
       class="selectable mdi mdi-trash-can-outline bg-danger"

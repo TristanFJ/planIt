@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark lighten-10 px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark px-3 bg-flow">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <img src="../assets/img/rocket.png" height="65" alt="Logo" />
     </router-link>
@@ -125,6 +125,15 @@ export default {
 </script>
 
 <style scoped>
+.bg-flow {
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    359deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+}
 .dropdown-menu {
   user-select: none;
   display: block;

@@ -6,7 +6,7 @@
     <router-view />
   </main>
   <footer>
-    <div class="bg-dark text-light text-center p-4">
+    <div class="text-center p-4">
       <!-- TODO githubs -->
       Made with 💖 by Team Best
     </div>

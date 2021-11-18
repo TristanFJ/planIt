@@ -25,7 +25,7 @@
               <input
                 v-model="state.editable.name"
                 type="text"
-                class="form-control"
+                class="form-control mb-3"
                 placeholder="Project Name"
                 aria-label="Example text with button addon"
                 aria-describedby="button-addon1"
@@ -40,13 +40,13 @@
                 aria-describedby="button-addon1"
               />
               <div class="modal-footer">
-                <button
+                <!-- <button
                   type="button"
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   Close
-                </button>
+                </button> -->
                 <button
                   type="submit"
                   @click.prevent="createProject"
@@ -54,7 +54,7 @@
                   data-bs-target="#create"
                   data-bs-dismiss="modal"
                 >
-                  Save changes
+                  Create
                 </button>
               </div>
             </form>
