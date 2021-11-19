@@ -38,9 +38,10 @@
         </button>
 
         <div class="dropdown my-2 my-lg-0" v-else>
-          <div class="dropdown-toggle selectable" data-bs-toggle="dropdown" aria-expanded="false" id="authDropdown">
-            <img :src="user.picture" alt="user photo" height="40" class="rounded" />
-            <span class="mx-3 text-dark lighten-30">{{ user.name }}</span>
+          <div class="selectable" data-bs-target="#accountModal" data-bs-toggle="modal" aria-expanded="false"
+            id="authDropdown">
+            <img :src="account.picture" alt="user photo" height="40" class="rounded-circle profile-img" />
+            <span class="mx-3 text-white">{{ account.name }}</span>
           </div>
           <div class="dropdown-menu p-0 list-group w-100" aria-labelledby="authDropdown">
             <router-link :to="{ name: 'Account' }">
@@ -62,6 +63,7 @@
     </div>
   </nav>
   <OffCanvas />
+  <AccountModal />
 </template>
 
 <script>
@@ -75,6 +77,8 @@
     setup() {
       return {
         user: computed(() => AppState.user),
+        account: computed(() => AppState.account),
+
         async login() {
           AuthService.loginWithPopup()
         },
@@ -124,5 +128,11 @@
     border-bottom: 2px solid var(--bs-success);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+  }
+
+  .profile-img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
   }
 </style>
