@@ -5,6 +5,7 @@
       {{ note.creator.name }} - {{ note.body }}
     </div>
     <i
+      v-if="account.id == note.creatorId"
       @click="remove()"
       class="selectable mdi mdi-trash-can-outline bg-danger"
     ></i>
@@ -23,6 +24,7 @@ export default {
   setup(props) {
     const route = useRoute()
     return {
+      account: computed(() => AppState.account),
       async remove() {
         try {
           const noteId = props.note.id
