@@ -3,7 +3,7 @@
     <div class="row justify-content-between">
       <div class="col-md-4 ps-4">
         <h3 class="mt-2 mb-0">Projects</h3>
-        <p class="mt-0">Hello, {{ account.name }}</p>
+        <p class="mt-2">Hello, {{ account.name }}</p>
       </div>
       <div class="col-md-3 me-5">
         <CreateProject />
