@@ -2,6 +2,7 @@
   <div class="py-1 border border-dark d-flex justify-content-between">
     {{ note.body }}
     <i
+      v-if="account.id == note.creatorId"
       @click="remove()"
       class="selectable mdi mdi-trash-can-outline bg-danger"
     ></i>
@@ -24,6 +25,7 @@ export default {
   setup(props) {
     const route = useRoute()
     return {
+      account: computed(() => AppState.account),
       async remove() {
         try {
           const noteId = props.note.id
