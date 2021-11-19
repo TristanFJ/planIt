@@ -3,7 +3,7 @@
     <div class="row justify-content-between">
       <div class="col-md-4 ps-4">
         <h3 class="mt-2 mb-0">Projects</h3>
-        <p class="mt-0">A List of All Projects for USER</p>
+        <p class="mt-0">Hello, {{ account.name }}</p>
       </div>
       <div class="col-md-3 me-5">
         <CreateProject />
@@ -25,39 +25,40 @@
 </template>
 
 <script>
-  import { computed, onMounted } from "@vue/runtime-core";
-  import { projectService } from "../services/ProjectService"
-  import Pop from "../utils/Pop";
-  import { logger } from "../utils/Logger";
-  import { AppState } from "../AppState";
-  import { router } from "../router";
+import { computed, onMounted } from "@vue/runtime-core";
+import { projectService } from "../services/ProjectService"
+import Pop from "../utils/Pop";
+import { logger } from "../utils/Logger";
+import { AppState } from "../AppState";
+import { router } from "../router";
 
-  export default {
-    name: 'Home',
-    setup() {
-      onMounted(async () => {
-        try {
-          await projectService.getAll('api/projects')
-        } catch (error) {
-          logger.error(error);
-          Pop.toast(error.message, 'error')
-        }
-      });
-
-      return {
-        projects: computed(() => AppState.projects),
-
-
-        routeTo(id) {
-          router.push({
-            name: "Project",
-            params: { projectId: id }
-          })
-        }
+export default {
+  name: 'Home',
+  setup() {
+    onMounted(async () => {
+      try {
+        await projectService.getAll('api/projects')
+      } catch (error) {
+        logger.error(error);
+        Pop.toast(error.message, 'error')
       }
+    });
 
+    return {
+      projects: computed(() => AppState.projects),
+      account: computed(() => AppState.account),
+
+
+      routeTo(id) {
+        router.push({
+          name: "Project",
+          params: { projectId: id }
+        })
+      }
     }
+
   }
+}
 </script>
 
 <style scoped lang="scss">
