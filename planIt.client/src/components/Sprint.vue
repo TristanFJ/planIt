@@ -14,8 +14,8 @@
               align-self-center
             "
           ></i>
-          <h4>{{ sprint.name }} {{ weight }}</h4>
-          <i class="mdi mdi-dumbbell mx-2"></i>
+          <h4>{{ sprint.name }}</h4>
+          <i class="mdi mdi-dumbbell mx-5"> {{ weight }}</i>
         </div>
         <ul>
           <Task v-for="t in tasks" :key="t.id" :task="t" />
