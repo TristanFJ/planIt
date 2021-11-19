@@ -18,10 +18,9 @@ main {
   background: linear-gradient(24deg, rgba(252,70,107,1) 25%, rgba(131,58,180,1) 100%); 
 }
 
-// footer {
-//   background: rgb(252,70,107);
-//   background: linear-gradient(180deg, rgba(252,70,107,1) 25%, rgba(131,58,180,1) 100%);
-// }
+footer {
+  background-color: $darkCustom;
+}
 
 a {
   text-decoration: none;
@@ -61,12 +60,12 @@ form:invalid button[type="submit"] {
 
 .offcanvas-header{
   color: $warning;
-  background-color: $primary;
+  background-color: $darkCustom;
 }
 
 .offcanvas-body{
 color: $warning;
-background-color: $primary;
+background: linear-gradient(24deg, rgba(252,70,107,1) 25%, rgba(131,58,180,1) 100%); 
 }
 
 .card {
