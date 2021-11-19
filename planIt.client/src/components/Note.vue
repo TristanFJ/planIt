@@ -1,13 +1,14 @@
 <template>
-  <div class="d-flex justify-content-between border-bottom border-dark">
-    <div class="note">
-      <img :src="note.creator.picture" alt="" />
-      {{ note.creator.name }} - {{ note.body }}
-    </div>
+  <div class="py-1 border border-dark d-flex justify-content-between">
+    {{ note.body }}
     <i
       @click="remove()"
       class="selectable mdi mdi-trash-can-outline bg-danger"
     ></i>
+  </div>
+  <br />
+  <div class="pb-3 d-flex justify-content-end">
+    <img :src="note.creator.picture" alt="" /> {{ note.creator.name }}
   </div>
 </template>
 
