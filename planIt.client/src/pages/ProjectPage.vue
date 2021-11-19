@@ -34,11 +34,13 @@
       </div>
       <div class="col-md-1"></div>
     </div>
+
   </div>
 </template>
 
 
 <script>
+
   import { computed } from "@vue/reactivity"
   import { AppState } from "../AppState"
   import { projectService } from "../services/ProjectService"
@@ -52,6 +54,7 @@
     setup() {
       const route = useRoute()
       onMounted(async () => {
+
         try {
           await projectService.getAll('api/projects')
           await sprintService.getAll('api/projects/' + route.params.projectId + '/sprints')

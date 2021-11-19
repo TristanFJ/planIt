@@ -36,19 +36,29 @@
 <script>
 import { computed } from "@vue/reactivity"
 import { AppState } from "../AppState"
-import { useRouter } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { logger } from "../utils/Logger"
+import { taskService } from "../services/TaskService"
+import { noteService } from "../services/NoteService"
+import { projectService } from "../services/ProjectService"
+import { sprintService } from "../services/SprintService"
 export default {
   setup() {
     const router = useRouter()
     return {
       projects: computed(() => AppState.projects),
 
-      routeTo(id) {
+      async routeTo(id) {
         router.push({
           name: "Project",
           params: { projectId: id }
         })
+        await projectService.getAll('api/projects')
+        await sprintService.getAll('api/projects/' + id + '/sprints')
+        await taskService.getAll('api/projects/' + id + '/tasks')
+        await noteService.getAll('api/projects/' + id + '/notes')
+
+
       }
     }
   }

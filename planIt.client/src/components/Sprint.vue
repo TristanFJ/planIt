@@ -1,6 +1,7 @@
 <template>
   <div class="sprint p-3">
     <div class="mt-5">
+
       <div class="container card m-2 w-50">
         <div class="row d-flex justify-content-between">
           <div class="col-md-3 m-0 p-0">
@@ -10,6 +11,7 @@
               mdi mdi-close
               rounded-circle
               align-self-center
+
             "></i>
           </div>
           <div class="col-md-6 p-3">
@@ -49,10 +51,12 @@
 
 
 <script>
+
   import { computed, onMounted, reactive, ref, watchEffect } from "@vue/runtime-core"
   import { AppState } from "../AppState"
   import { logger } from "../utils/Logger"
   import { sprintService } from "../services/SprintService"
+
 
   import Pop from "../utils/Pop"
   import { useRoute } from "vue-router"
@@ -64,6 +68,7 @@
       const route = useRoute()
       let editable = ref({
       });
+
 
       // REVIEW watcheffect???
       onMounted(async () => {
