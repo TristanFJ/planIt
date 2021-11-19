@@ -26,7 +26,7 @@
           </div>
           <div class="col-md-3">
             <button
-              class="mdi mdi-delete-forever f-24 btn text-danger"
+              class="mdi mdi-delete-forever bg-dark f-24 btn btn-sm text-danger"
               @click="remove(active.id)"
               aria-label="Remove Project"
               title="Remove project"
