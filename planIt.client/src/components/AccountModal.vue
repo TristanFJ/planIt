@@ -32,7 +32,14 @@
                   placeholder="Name..." v-model="editable.name" />
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex">
+              <button class="btn btn-primary
+                              hoverable
+                              text-danger
+                            " @click="logout">
+                <i class="mdi mdi-logout"></i>
+                logout
+              </button>
               <button data-bs-target="#accountModal" data-bs-toggle="modal" type="submit" class="btn btn-primary">
                 Save
               </button>
@@ -54,6 +61,8 @@
   import { useRouter } from 'vue-router'
   import { AppState } from '../AppState'
   import { watchEffect, computed } from '@vue/runtime-core'
+  import { AuthService } from '../services/AuthService'
+
   export default {
     props: {
       account: {
@@ -77,6 +86,10 @@
             logger.error(error)
             Pop.toast('Failed to Edit', 'error')
           }
+        },
+
+        async logout() {
+          AuthService.logout({ returnTo: window.location.origin })
         }
       }
     }
