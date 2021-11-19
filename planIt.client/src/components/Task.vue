@@ -1,6 +1,7 @@
 <template>
   <div class="task my-3 d-flex justify-content-between border border-dark">
     <i
+      v-if="account.id == task.creatorId"
       class="selectable bg-warning mdi mdi-pencil rounded align-self-center"
       data-bs-toggle="modal"
       :data-bs-target="'#edit-' + task.id"
@@ -20,6 +21,7 @@
     ></i>
     {{ task.name }}, Weight: {{ task.weight }}
     <i
+      v-if="account.id == task.creatorId"
       @click="remove()"
       class="selectable mdi mdi-trash-can-outline bg-danger"
     ></i>
@@ -95,6 +97,7 @@
               </div>
             </div>
             <button
+              v-if="account.id == task.creatorId"
               type="submit"
               @click.prevent="edit()"
               class="btn btn-primary"
@@ -175,6 +178,7 @@ export default {
       sprints: computed(() => AppState.sprints),
       // sprintsFilter: computed(() => AppState.sprints.filter(s => route.params.projectId == s.projectId)),
       notes: computed(() => AppState.notes.filter(n => n.taskId == props.task.id)),
+      account: computed(() => AppState.account),
 
 
 

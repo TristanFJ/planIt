@@ -4,6 +4,7 @@
       <div class="card m-2 w-50 p-3">
         <div class="d-flex justify-content-between">
           <i
+            v-if="account.id == sprint.creatorId"
             @click="remove()"
             class="
               selectable
@@ -13,8 +14,8 @@
               align-self-center
             "
           ></i>
-          <h4>{{ sprint.name }} {{ weight }}</h4>
-          <i class="mdi mdi-dumbbell mx-2"></i>
+          <h4>{{ sprint.name }}</h4>
+          <i class="mdi mdi-dumbbell mx-5"> {{ weight }}</i>
         </div>
         <ul>
           <Task v-for="t in tasks" :key="t.id" :task="t" />
@@ -100,6 +101,7 @@ export default {
     return {
       editable,
       active: computed(() => AppState.activeProject),
+      account: computed(() => AppState.account),
       tasks: computed(() => AppState.tasks.filter(t => t.sprintId == props.sprint.id)),
       weight: computed(() => {
         let weight = 0

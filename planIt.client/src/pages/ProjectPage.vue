@@ -11,6 +11,7 @@
   </button>
   <div class="component p-3" v-if="active">
     <button
+      v-if="account.id == active.creatorId"
       class="mdi mdi-delete bg-danger btn"
       @click="remove(active.id)"
     ></button>
@@ -59,6 +60,7 @@ export default {
     return {
       active: computed(() => AppState.projects.find(p => p.id == route.params.projectId)),
       sprints: computed(() => AppState.sprints),
+      account: computed(() => AppState.account),
 
       async remove(id) {
         try {
