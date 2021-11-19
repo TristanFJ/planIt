@@ -15,6 +15,12 @@ class NoteService {
     logger.log('new note', res)
     AppState.notes.push(res.data)
   }
+  async remove(noteId, routeId) {
+    const yes = await Pop.confirm('Delete?')
+    if (!yes) { return }
+    await api.delete('api/projects/' + routeId + '/notes/' + noteId)
+    AppState.notes = AppState.notes.filter(n => n.id !== noteId)
+  }
 }
 
 export const noteService = new NoteService()

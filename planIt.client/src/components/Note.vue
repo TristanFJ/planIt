@@ -1,6 +1,13 @@
 <template>
-  <div class="note">
-    {{ note.body }}
+  <div class="d-flex justify-content-between border-bottom border-dark">
+    <div class="note">
+      <img :src="note.creator.picture" alt="" />
+      {{ note.creator.name }} - {{ note.body }}
+    </div>
+    <i
+      @click="remove()"
+      class="selectable mdi mdi-trash-can-outline bg-danger"
+    ></i>
   </div>
 </template>
 
@@ -8,11 +15,23 @@
 <script>
 import { computed } from "@vue/reactivity"
 import { AppState } from "../AppState"
+import { useRoute } from "vue-router"
+import { noteService } from "../services/NoteService"
+import { logger } from "../utils/Logger"
 export default {
   props: { note: { type: Object, required: true } },
-  setup() {
+  setup(props) {
+    const route = useRoute()
     return {
-      // notes: computed(() => AppState.notes.filter(n => n.taskId == AppState.tasks.id)),
+      async remove() {
+        try {
+          const noteId = props.note.id
+          await noteService.remove(noteId, route.params.projectId)
+        } catch (error) {
+          logger.error(error)
+
+        }
+      }
     }
   }
 }
@@ -20,4 +39,7 @@ export default {
 
 
 <style lang="scss" scoped>
+img {
+  height: 20px;
+}
 </style>

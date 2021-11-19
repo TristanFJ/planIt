@@ -184,7 +184,6 @@ export default {
           await taskService.remove(taskId, route.params.projectId)
         } catch (error) {
           logger.error(error)
-
         }
       },
       async edit() {
