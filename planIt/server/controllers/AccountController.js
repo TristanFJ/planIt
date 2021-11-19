@@ -5,7 +5,8 @@ import { logger } from '../utils/Logger'
 
 export class AccountController extends BaseController {
   constructor() {
-    super('api/account')
+    // NOTE api/account needs fixed
+    super('account')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)

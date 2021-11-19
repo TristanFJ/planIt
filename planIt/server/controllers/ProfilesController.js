@@ -1,4 +1,5 @@
 import { profileService } from '../services/ProfileService.js'
+import { Auth0Provider } from '@bcwdev/auth0provider'
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 
