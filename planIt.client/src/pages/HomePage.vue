@@ -25,40 +25,45 @@
 </template>
 
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { projectService } from "../services/ProjectService"
-import Pop from "../utils/Pop";
-import { logger } from "../utils/Logger";
-import { AppState } from "../AppState";
-import { router } from "../router";
+  import { computed, onMounted } from "@vue/runtime-core";
+  import { projectService } from "../services/ProjectService"
+  import Pop from "../utils/Pop";
+  import { logger } from "../utils/Logger";
+  import { AppState } from "../AppState";
+  import { router } from "../router";
+  import { AuthService } from '../services/AuthService'
 
-export default {
-  name: 'Home',
-  setup() {
-    onMounted(async () => {
-      try {
-        await projectService.getAll('api/projects')
-      } catch (error) {
-        logger.error(error);
-        Pop.toast(error.message, 'error')
+
+  export default {
+    name: 'Home',
+    setup() {
+      onMounted(async () => {
+        try {
+          await projectService.getAll('api/projects')
+        } catch (error) {
+          logger.error(error);
+          Pop.toast("Please log in", 'error')
+          // Pop.toast(error.message, 'error')
+        }
+      });
+
+      return {
+        projects: computed(() => AppState.projects),
+        account: computed(() => AppState.account),
+        user: computed(() => AppState.user),
+
+
+
+        routeTo(id) {
+          router.push({
+            name: "Project",
+            params: { projectId: id }
+          })
+        }
       }
-    });
 
-    return {
-      projects: computed(() => AppState.projects),
-      account: computed(() => AppState.account),
-
-
-      routeTo(id) {
-        router.push({
-          name: "Project",
-          params: { projectId: id }
-        })
-      }
     }
-
   }
-}
 </script>
 
 <style scoped lang="scss">
